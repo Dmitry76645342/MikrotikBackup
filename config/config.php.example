@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Пример конфигурационного файла для системы резервного копирования MikroTik
+ * 
+ * Скопируйте этот файл в config.php и настройте параметры:
+ * cp config.php.example config.php
+ */
+
+return [
+    /**
+     * Настройки Zabbix API
+     */
+    'zabbix_url' => 'http://zabbix.local/api_jsonrpc.php',  // URL API Zabbix
+    'zabbix_user' => 'backup_user',                         // Пользователь Zabbix
+    'zabbix_pass' => 'secure_password',                     // Пароль пользователя
+    'zabbix_group_id' => '15',                             // ID группы с MikroTik устройствами
+    
+    /**
+     * Настройки SSH/SFTP
+     */
+    'ssh_port' => 22,                                      // Порт SSH на устройствах
+    
+    /**
+     * Пути для сохранения бэкапов
+     */
+    'backup_path' => '/backup/mikrotik/',                  // Путь для сохранения бэкапов
+    'log_file' => '/var/log/mikrotik_backup.log',         // Путь к файлу логов
+    
+    /**
+     * Настройки хранения
+     */
+    'retention_days' => 30,                                // Срок хранения бэкапов в днях
+    
+    /**
+     * Настройки шифрования (опционально)
+     * Если enable_encryption = true, бэкапы будут шифроваться с помощью GPG
+     */
+    'enable_encryption' => false,                          // Включить шифрование
+    'gpg_recipient' => 'backup@company.com',              // Email получателя GPG
+    
+    /**
+     * Настройки Telegram (опционально)
+     * Для отправки отчетов в Telegram
+     */
+    'telegram_bot_token' => '',                           // Токен бота Telegram
+    'telegram_chat_id' => '',                             // ID чата для отправки
+    
+    /**
+     * Настройки асинхронного режима
+     */
+    'async_max_concurrent' => 5,                          // Максимум параллельных бэкапов
+    
+    /**
+     * Макросы Zabbix для получения учетных данных
+     * Эти макросы должны быть настроены для каждого хоста в Zabbix
+     */
+    'zabbix_macros' => [
+        'username' => '{$BACKUP_USER}',                   // Макрос с именем пользователя
+        'password' => '{$BACKUP_PASS}',                   // Макрос с паролем
+    ],
+    
+    /**
+     * Дополнительные настройки
+     */
+    'debug' => false,                                     // Режим отладки
+    'timezone' => 'Europe/Moscow',                        // Временная зона
+]; 
